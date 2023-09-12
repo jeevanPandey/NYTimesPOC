@@ -8,6 +8,7 @@
 
 import Foundation
 
+// This is service class which calls API for news 
 protocol ImageFetcherInterface {
   func fetchImage(url:URL, completion: @escaping (Result<Data, NetworkError>) -> ())
 }
