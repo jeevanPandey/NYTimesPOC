@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsCell" rowHeight="119" id="KGk-i7-Jjw" customClass="NewsCell" customModule="NYTimesPOC" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="379" height="119"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="379" height="119"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nMo-9s-e4s">
+                        <rect key="frame" x="8" y="8" width="90" height="90"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="S5t-Zr-G9c"/>
+                            <constraint firstAttribute="width" secondItem="nMo-9s-e4s" secondAttribute="height" multiplier="1:1" id="W6w-o5-4Ym"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISm-ys-J0s">
+                        <rect key="frame" x="106" y="18" width="265" height="20.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cZS-8p-Rta">
+                        <rect key="frame" x="106" y="48.5" width="265" height="62.5"/>
+                        <string key="text">Frans Timmermans is stepping down at a crucial time for European climate laws to become the lead candidate for a left-wing coalition in the Dutch elections in November.</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ISm-ys-J0s" secondAttribute="trailing" constant="8" id="Av1-SZ-PPM"/>
+                    <constraint firstItem="nMo-9s-e4s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="FYl-m5-uPB"/>
+                    <constraint firstItem="cZS-8p-Rta" firstAttribute="top" secondItem="ISm-ys-J0s" secondAttribute="bottom" constant="10" id="LEf-Mu-MKX"/>
+                    <constraint firstItem="nMo-9s-e4s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="TCP-Xe-TTD"/>
+                    <constraint firstItem="ISm-ys-J0s" firstAttribute="top" secondItem="nMo-9s-e4s" secondAttribute="top" constant="10" id="bnO-CB-Rxk"/>
+                    <constraint firstItem="cZS-8p-Rta" firstAttribute="leading" secondItem="nMo-9s-e4s" secondAttribute="trailing" constant="8" id="h7Z-kg-2wE"/>
+                    <constraint firstAttribute="bottom" secondItem="cZS-8p-Rta" secondAttribute="bottom" constant="8" id="hdO-md-NIX"/>
+                    <constraint firstAttribute="trailing" secondItem="cZS-8p-Rta" secondAttribute="trailing" constant="8" id="t6u-Yt-ZFb"/>
+                    <constraint firstItem="ISm-ys-J0s" firstAttribute="leading" secondItem="nMo-9s-e4s" secondAttribute="trailing" constant="8" id="yB1-G9-mqB"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="articleImage" destination="nMo-9s-e4s" id="NU2-8u-LZg"/>
+                <outlet property="articleSubtitle" destination="cZS-8p-Rta" id="pY6-SZ-mFt"/>
+                <outlet property="articleTitle" destination="ISm-ys-J0s" id="8lP-NJ-EhB"/>
+            </connections>
+            <point key="canvasLocation" x="129.71014492753625" y="44.53125"/>
+        </tableViewCell>
+    </objects>
+</document>

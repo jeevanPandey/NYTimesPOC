@@ -1,0 +1,74 @@
+{
+  "status": "OK",
+  "copyright": "Copyright (c) 2023 The New York Times Company. All Rights Reserved.",
+  "section": "World News",
+  "last_updated": "2023-08-24T09:58:20-04:00",
+  "num_results": 36,
+  "results": [
+    {
+      "section": "world",
+      "subsection": "europe",
+      "title": "‘Aren’t You a Man?’: How Russia Goads Citizens Into the Army",
+      "abstract": "The Times tracked several months of Russian state messaging in the Kremlin’s effort to recruit soldiers.",
+      "url": "https://www.nytimes.com/2023/08/23/world/europe/russia-war-military-recruitment-campaign.html",
+      "uri": "nyt://article/0b3d2e22-0570-5473-915a-bc3fd38d2f83",
+      "byline": "By Anton Troianovski, Alina Lobzina, Sarah Kerr and Natalie Reneau",
+      "item_type": "Article",
+      "updated_date": "2023-08-23T23:07:47-04:00",
+      "created_date": "2023-08-23T05:00:51-04:00",
+      "published_date": "2023-08-23T05:00:51-04:00",
+      "material_type_facet": "",
+      "kicker": "",
+      "des_facet": [
+        "Russian Invasion of Ukraine (2022)",
+        "Defense and Military Forces",
+        "Draft and Recruitment (Military)",
+        "Propaganda",
+        "vis-video"
+      ],
+      "org_facet": [
+        
+      ],
+      "per_facet": [
+        
+      ],
+      "geo_facet": [
+        "Russia",
+        "Ukraine"
+      ],
+      "multimedia": [
+        {
+          "url": "https://static01.nyt.com/images/2023/08/22/video/russian-military-propaganda-cover/russian-military-propaganda-cover-superJumbo-v2.jpg",
+          "format": "Super Jumbo",
+          "height": 1080,
+          "width": 1620,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "",
+          "copyright": "Russian Ministry of Defense"
+        },
+        {
+          "url": "https://static01.nyt.com/images/2023/08/22/video/russian-military-propaganda-cover/russian-military-propaganda-cover-threeByTwoSmallAt2X-v2.jpg",
+          "format": "threeByTwoSmallAt2X",
+          "height": 400,
+          "width": 600,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "",
+          "copyright": "Russian Ministry of Defense"
+        },
+        {
+          "url": "https://static01.nyt.com/images/2023/08/22/video/russian-military-propaganda-cover/russian-military-propaganda-cover-thumbLarge-v2.jpg",
+          "format": "Large Thumbnail",
+          "height": 150,
+          "width": 150,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "",
+          "copyright": "Russian Ministry of Defense"
+        }
+      ],
+      "short_url": "https://nyti.ms/44gbQdD"
+    }
+  ]
+}
