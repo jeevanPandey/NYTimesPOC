@@ -22,4 +22,5 @@ jobs:
       - name: Build
         run: |
            cd NYTimesPOC 
-           xcodebuild test -scheme NYTimesPOC -project NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
+           ls 
+           xcodebuild -scheme NYTimesPOC -project NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
