@@ -14,10 +14,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Go back
+      - name: print work space
         run: |
-           cd NYTimesPOC
+           
            echo "Here below:"
            ls ${{ github.workspace }}
       - name: Build
-        run: xcodebuild test -scheme NYTimesPOC -project NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
+        run: |
+           cd NYTimesPOC 
+           xcodebuild test -scheme NYTimesPOC -project NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
