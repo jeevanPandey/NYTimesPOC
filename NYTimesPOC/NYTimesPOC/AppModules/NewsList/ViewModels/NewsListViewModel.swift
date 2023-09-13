@@ -21,10 +21,6 @@ class NewsListViewModel {
     self.newsListService = service
   }
   
-  class func defaultConfig() -> NewsAPIConfig {
-    NewsAPIConfig(baseURLString: NetworkConfig.getURLForNewList(),
-                  requestMethod: .GET, headers: .appJson)
-  }
   func getLatestNews() {
     newsListService.fetchNewArticleData { [weak self] (result) in
       switch result {
