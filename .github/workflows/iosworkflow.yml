@@ -15,6 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Go back
-        run: cd..
+        run: cd ..
       - name: Build
         run: xcodebuild test -scheme NYTimesPOC -project NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
