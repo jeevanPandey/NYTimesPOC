@@ -18,6 +18,6 @@ jobs:
         run: |
           cd ..
            echo "Here below:"
-           echo "Name of all teh files ${ls} "
+           ls ${{ github.workspace }}
       - name: Build
         run: xcodebuild test -scheme NYTimesPOC -project NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
