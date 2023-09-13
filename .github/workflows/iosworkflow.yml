@@ -16,7 +16,6 @@ jobs:
         uses: actions/checkout@v3
       - name: Go back
         run: |
-          cd ..
            echo "Here below:"
            ls ${{ github.workspace }}
       - name: Build
