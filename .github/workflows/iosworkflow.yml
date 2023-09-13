@@ -15,4 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Build
-      - run: xcodebuild -configuration Debug  -target  NYTimesPOC -sdk iphonesimulator15.0
+      - run: |
+             cd .. 
+             xcodebuild  -scheme NYTimesPOC -project NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
