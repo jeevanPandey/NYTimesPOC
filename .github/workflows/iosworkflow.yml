@@ -1,4 +1,4 @@
-name: iOS starter workflow
+name: Build status
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build and Test default scheme using any available iPhone simulator
+    name: Build and Test in Simulator
     runs-on: macos-11
 
     steps:
@@ -21,12 +21,10 @@ jobs:
            ls ${{ github.workspace }}
       - name: Build
         run: |
-           cd NYTimesPOC 
            ls 
-           xcodebuild -scheme NYTimesPOC -project NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
+           xcodebuild -scheme NYTimesPOC -project NYTimesPOC/NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
       - name: Test
         run: |
-           cd NYTimesPOC 
            ls 
-           xcodebuild test -scheme NYTimesPOC -project NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
+           xcodebuild test -scheme NYTimesPOC -project NYTimesPOC/NYTimesPOC.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
 
