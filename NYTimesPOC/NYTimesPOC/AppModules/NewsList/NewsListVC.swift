@@ -13,6 +13,7 @@ class NewsListVC: UIViewController {
   
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   let viewModel = NewsListViewModel()
+  weak var coordinator: ListViewCoordinator?
   override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "News List"
@@ -56,9 +57,7 @@ extension NewsListVC: UITableViewDataSource {
 }
 
 extension NewsListVC: UITableViewDelegate {
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    guard let detailVC = storyboard?.instantiateViewController(withIdentifier: "NewsDetailVC") as? NewsDetailVC else { return }
-    detailVC.detailVM = viewModel.getDetailViewModel(rowIndex: indexPath.row)
-    self.navigationController?.pushViewController(detailVC, animated: true)
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {     
+    coordinator?.navigateToDetailVC(withViewModel: viewModel.getDetailViewModel(rowIndex: indexPath.row))
   }
 }

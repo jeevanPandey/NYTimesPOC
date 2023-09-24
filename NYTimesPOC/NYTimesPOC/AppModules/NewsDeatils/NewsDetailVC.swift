@@ -16,6 +16,7 @@ class NewsDetailVC: UIViewController {
   @IBOutlet weak var articleDetails: UILabel!
   @IBOutlet weak var articlePublisheDate: UILabel!
   var detailVM: DetailViewModel!
+  var coordinator: Coordinator?
 
   override func viewDidLoad() {
     super.viewDidLoad()

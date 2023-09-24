@@ -13,6 +13,11 @@
 		DA3CD0202A98482A00192F96 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3CD01F2A98482A00192F96 /* DetailViewModel.swift */; };
 		DA3CD0252A98508300192F96 /* NewsDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3CD0242A98508300192F96 /* NewsDetailVC.swift */; };
 		DA3CD0282A98597700192F96 /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3CD0272A98597700192F96 /* AppUtil.swift */; };
+		DA802C552AB9C8BE00AA0012 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA802C542AB9C8BE00AA0012 /* Coordinator.swift */; };
+		DA802C592AB9CB1500AA0012 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA802C582AB9CB1500AA0012 /* MainCoordinator.swift */; };
+		DA802C5B2AB9CF6200AA0012 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA802C5A2AB9CF6200AA0012 /* Storyboarded.swift */; };
+		DA802C5D2AB9E85F00AA0012 /* DetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA802C5C2AB9E85F00AA0012 /* DetailCoordinator.swift */; };
+		DA802C642ABA96F000AA0012 /* ListViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA802C632ABA96F000AA0012 /* ListViewCoordinator.swift */; };
 		DAC990732A962B2E00B2BC4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC990722A962B2E00B2BC4E /* AppDelegate.swift */; };
 		DAC990752A962B2E00B2BC4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC990742A962B2E00B2BC4E /* SceneDelegate.swift */; };
 		DAC9907A2A962B2E00B2BC4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC990782A962B2E00B2BC4E /* Main.storyboard */; };
@@ -57,6 +62,11 @@
 		DA3CD01F2A98482A00192F96 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		DA3CD0242A98508300192F96 /* NewsDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailVC.swift; sourceTree = "<group>"; };
 		DA3CD0272A98597700192F96 /* AppUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
+		DA802C542AB9C8BE00AA0012 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		DA802C582AB9CB1500AA0012 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		DA802C5A2AB9CF6200AA0012 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		DA802C5C2AB9E85F00AA0012 /* DetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoordinator.swift; sourceTree = "<group>"; };
+		DA802C632ABA96F000AA0012 /* ListViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewCoordinator.swift; sourceTree = "<group>"; };
 		DAC9906F2A962B2E00B2BC4E /* NYTimesPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NYTimesPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC990722A962B2E00B2BC4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAC990742A962B2E00B2BC4E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,8 +138,20 @@
 			isa = PBXGroup;
 			children = (
 				DA3CD0272A98597700192F96 /* AppUtil.swift */,
+				DA802C5A2AB9CF6200AA0012 /* Storyboarded.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		DA802C532AB9C88D00AA0012 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				DA802C542AB9C8BE00AA0012 /* Coordinator.swift */,
+				DA802C5C2AB9E85F00AA0012 /* DetailCoordinator.swift */,
+				DA802C632ABA96F000AA0012 /* ListViewCoordinator.swift */,
+				DA802C582AB9CB1500AA0012 /* MainCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		DAC990662A962B2E00B2BC4E = {
@@ -187,6 +209,7 @@
 		DAC990A22A962BC300B2BC4E /* AppModules */ = {
 			isa = PBXGroup;
 			children = (
+				DA802C532AB9C88D00AA0012 /* Coordinators */,
 				DAC990A32A962BF000B2BC4E /* MainStoryBoard */,
 				DAC990A42A962C8500B2BC4E /* NewsList */,
 				DA3CD0232A98503600192F96 /* NewsDeatils */,
@@ -393,18 +416,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA802C592AB9CB1500AA0012 /* MainCoordinator.swift in Sources */,
 				DA3CD0252A98508300192F96 /* NewsDetailVC.swift in Sources */,
 				DAC990A62A962C9800B2BC4E /* NewsListVC.swift in Sources */,
+				DA802C5D2AB9E85F00AA0012 /* DetailCoordinator.swift in Sources */,
+				DA802C552AB9C8BE00AA0012 /* Coordinator.swift in Sources */,
 				DAC990BD2A9781C500B2BC4E /* CellListVM.swift in Sources */,
 				DAC990B12A9631E100B2BC4E /* DataRequestManager.swift in Sources */,
 				DAC990732A962B2E00B2BC4E /* AppDelegate.swift in Sources */,
 				DAC990752A962B2E00B2BC4E /* SceneDelegate.swift in Sources */,
+				DA802C5B2AB9CF6200AA0012 /* Storyboarded.swift in Sources */,
 				DAC990BA2A9644F500B2BC4E /* NewsCell.swift in Sources */,
 				DAC990A92A962EC700B2BC4E /* NewsListViewModel.swift in Sources */,
 				DA3CD0202A98482A00192F96 /* DetailViewModel.swift in Sources */,
 				DA3CD0282A98597700192F96 /* AppUtil.swift in Sources */,
 				DAC990B22A9631E100B2BC4E /* RequestGenerator.swift in Sources */,
 				DAC990AC2A962F9200B2BC4E /* Article.swift in Sources */,
+				DA802C642ABA96F000AA0012 /* ListViewCoordinator.swift in Sources */,
 				DAC990B52A96320A00B2BC4E /* ServerEndPoint.swift in Sources */,
 				DAC990B62A96320A00B2BC4E /* NetworkConfig.swift in Sources */,
 			);
@@ -592,7 +620,6 @@
 				INFOPLIST_FILE = NYTimesPOC/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -621,7 +648,6 @@
 				INFOPLIST_FILE = NYTimesPOC/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

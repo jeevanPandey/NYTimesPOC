@@ -11,9 +11,9 @@ struct CellListVM {
   var title: String
   var subtitle: String
   var imageString: String
-  var imageService: ImageService
   
   func getImage(url: URL, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
+    let imageService = ImageService()
     DispatchQueue.global().async {
       imageService.fetchImage(url: url) {  (result) in
         switch result {

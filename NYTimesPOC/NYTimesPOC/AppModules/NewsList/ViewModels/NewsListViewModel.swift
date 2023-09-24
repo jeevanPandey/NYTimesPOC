@@ -40,8 +40,7 @@ class NewsListViewModel {
     let modifiedArray = filterArray(articles: self.newList)
     let cellVM =  modifiedArray.map { eachArtitle -> CellListVM in
       return CellListVM(title: eachArtitle.title ?? "", subtitle: eachArtitle.abstract ?? "",
-                        imageString: getMediaURLPath(article: eachArtitle),
-                        imageService: ImageService())
+                        imageString: getMediaURLPath(article: eachArtitle))
     }
     cellListVM = cellVM
   }
