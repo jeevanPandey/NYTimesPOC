@@ -14,7 +14,6 @@ protocol ImageFetcherInterface {
   func fetchImage(url:URL, completion: @escaping (Result<Data, NetworkError>) -> ())
 }
 protocol NewsAPIFetcherInterface  {
-  func fetchNewArticleData(completion: @escaping (Result<ArticleResponse, NetworkError>) -> ())
   func getNewsArticleData() -> AnyPublisher<ArticleResponse, NetworkError>
 }
 
@@ -33,14 +32,7 @@ class NewsService: NewsAPIFetcherInterface,ServerEndPoint {
     let defaltConfig = NewsAPIConfig.defaultConfig()
     self.init(endpointConfig: defaltConfig)
   }
-  
-  func fetchNewArticleData(completion: @escaping(Result<ArticleResponse, NetworkError>) -> ()) {
-    DataRequestManager<ArticleResponse>().makeAPICall(url: self.baseURLString, params: ["": ""],
-                                                      httpHeader: self.headers , requestType: self.requestMethod) { result in
-      completion(result)
-    }
-  }
-  
+    
   func getNewsArticleData() -> AnyPublisher<ArticleResponse, NetworkError> {
     DataRequestManager<ArticleResponse>().fetchData(url: baseURLString,
                                                     params: ["": ""],
