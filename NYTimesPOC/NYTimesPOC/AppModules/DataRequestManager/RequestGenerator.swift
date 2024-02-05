@@ -7,6 +7,7 @@
 
 
 import Foundation
+import Combine
 
 // This is service class which calls API for news 
 protocol ImageFetcherInterface {
@@ -14,6 +15,7 @@ protocol ImageFetcherInterface {
 }
 protocol NewsAPIFetcherInterface  {
   func fetchNewArticleData(completion: @escaping (Result<ArticleResponse, NetworkError>) -> ())
+  func getNewsArticleData() -> AnyPublisher<ArticleResponse, NetworkError>
 }
 
 class NewsService: NewsAPIFetcherInterface,ServerEndPoint {
@@ -37,6 +39,13 @@ class NewsService: NewsAPIFetcherInterface,ServerEndPoint {
                                                       httpHeader: self.headers , requestType: self.requestMethod) { result in
       completion(result)
     }
+  }
+  
+  func getNewsArticleData() -> AnyPublisher<ArticleResponse, NetworkError> {
+    DataRequestManager<ArticleResponse>().fetchData(url: baseURLString,
+                                                    params: ["": ""],
+                                                    httpHeader: headers,
+                                                    requestType: requestMethod).eraseToAnyPublisher()
   }
 }
 

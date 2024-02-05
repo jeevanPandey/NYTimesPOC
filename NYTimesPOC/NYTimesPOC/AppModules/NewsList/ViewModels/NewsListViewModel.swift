@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import Combine
 class NewsListViewModel {
   
   private var newsListService: NewsAPIFetcherInterface
   private var newList = [Article]()
   var reloadTableView: (() -> Void)?
+  private var cancellables = Set<AnyCancellable>()
   var cellListVM =  [CellListVM]() {
     didSet {
       reloadTableView?()
@@ -25,18 +27,43 @@ class NewsListViewModel {
     NewsAPIConfig(baseURLString: NetworkConfig.getURLForNewList(),
                   requestMethod: .GET, headers: .appJson)
   }
+  
   func getLatestNews() {
-    newsListService.fetchNewArticleData { [weak self] (result) in
-      switch result {
-        case .success(let response):
-          if let articles = response.articles {
-            self?.newList.removeAll()
-            self?.newList.append(contentsOf: articles)
-            self?.createCellViewModel()
-          }
-        case .failure(let error):
-          print("response is \(error)")
+    let responsePublisher  = newsListService.getNewsArticleData()
+    responsePublisher
+      .sink { completion in
+                    switch completion {
+                        case .finished:
+                          debugPrint("Finsihed the request")
+                            break
+                        case .failure(let error):
+                        self.showError(error: error)
+                    }
+                }
+      receiveValue: { [weak self] response in
+        print("response")
+        self?.refreshUI(response: response)
       }
+    .store(in: &cancellables)
+
+  }
+  
+  private func refreshUI(response: ArticleResponse) {
+    if let articles = response.articles {
+      newList.removeAll()
+      newList.append(contentsOf: articles)
+      createCellViewModel()
+    }
+  }
+  
+  private func showError(error: Error) {
+    switch error {
+    case let decodingError as DecodingError:
+        debugPrint("Decoding error")
+    case let apiError as NetworkError:
+        debugPrint("NetworkError")
+    default:
+        debugPrint("Unknown error")
     }
   }
   

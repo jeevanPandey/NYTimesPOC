@@ -45,6 +45,7 @@ struct NetworkConfig {
 }
 
 enum NetworkError: Error {
+    case invalidURL
     case invalidResponse
     case invalidData
     case decodingError(err: String)
