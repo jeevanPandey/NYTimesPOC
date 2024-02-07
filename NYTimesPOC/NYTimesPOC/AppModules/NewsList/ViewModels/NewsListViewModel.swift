@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import Combine
 class NewsListViewModel {
   
@@ -32,20 +33,20 @@ class NewsListViewModel {
     let responsePublisher  = newsListService.getNewsArticleData()
     responsePublisher
       .sink { completion in
-                    switch completion {
-                        case .finished:
-                          debugPrint("Finsihed the request")
-                            break
-                        case .failure(let error):
-                        self.showError(error: error)
-                    }
-                }
-      receiveValue: { [weak self] response in
-        print("response")
-        self?.refreshUI(response: response)
+        switch completion {
+          case .finished:
+            debugPrint("Finsihed the request")
+            break
+          case .failure(let error):
+            self.showError(error: error)
+        }
       }
-    .store(in: &cancellables)
-
+  receiveValue: { [weak self] response in
+    print("response")
+    self?.refreshUI(response: response)
+  }
+  .store(in: &cancellables)
+    
   }
   
   private func refreshUI(response: ArticleResponse) {

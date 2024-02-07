@@ -7,10 +7,14 @@
 
 
 
-import Foundation
+import UIKit
 import Combine
 
 class DataRequestManager <T: Codable> {
+  private let cache: NSCache<NSURL, UIImage>
+  init(cache: NSCache<NSURL, UIImage> = .init()) {
+          self.cache = cache
+  }
   
   func fetchData(url: String,
                  params: [String: String],
@@ -19,7 +23,6 @@ class DataRequestManager <T: Codable> {
     guard let url = URL(string: url) else {
       return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
     }
-    print("URL is \(url.absoluteString)")
     var request = URLRequest(url: url)
     request.httpMethod = requestType.rawValue
     httpHeader.setHeader(urlRequest: &request)
@@ -42,50 +45,36 @@ class DataRequestManager <T: Codable> {
       .eraseToAnyPublisher()
   }
   
-  func loadData(url: URL, complete: @escaping (Result<Data, NetworkError>) -> ()) {
-    let tempDir = FileManager.default.temporaryDirectory
-    let fileCachePath = tempDir.appendingPathComponent(url.lastPathComponent,
-                                                      isDirectory: false)
-    do {
-      let data = try Data(contentsOf: fileCachePath)
-      complete(.success(data))
-      return
-    } catch let error {
-      debugPrint("\(error)")
-      complete(.failure(.decodingError(err: "Error while Catching")))
-      
+  func loadImageData(url: URL) -> AnyPublisher<UIImage, NetworkError> {
+    if let image = cache.object(forKey: url as NSURL) {
+      return Just(image)
+        .setFailureType(to: NetworkError.self)
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
     }
-    download(url: url, toFile: fileCachePath) { (error) in
-      do {
-        let data = try Data(contentsOf: fileCachePath)
-        complete(.success(data))
-        return
-      } catch let error {
-        debugPrint("\(error)")
-        complete(.failure(.decodingError(err: "Error while Downloading")))
+    return URLSession.shared.dataTaskPublisher(for: url)
+      .tryMap { (data, response) -> Data in
+        guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
+          throw NetworkError.invalidData
+        }
+        return data
       }
-    }
-  }
-
- private func download(url: URL, toFile file: URL, completion: @escaping (Error?) -> Void) {
-      let task = URLSession.shared.downloadTask(with: url) {
-          (tempURL, response, error) in
-          guard let tempURL = tempURL else {
-              completion(error)
-              return
-          }
-          do {
-              if !FileManager.default.fileExists(atPath: file.path) {
-                 // try FileManager.default.removeItem(at: file)
-                try FileManager.default.copyItem(at: tempURL,to: file)
-              }
-              completion(nil)
-          }
-          catch let fileError {
-              completion(fileError)
-          }
+      .tryMap { data in
+        guard let image = UIImage(data: data) else {
+          throw URLError(.badServerResponse, userInfo: [
+            NSURLErrorFailingURLErrorKey: url
+          ])
+        }
+        return image
       }
-      task.resume()
+      .mapError({ error in
+        NetworkError.decodingError(err: "decoding error")
+      })
+      .receive(on: DispatchQueue.main)
+      .handleEvents(receiveOutput: { [cache] image in
+        cache.setObject(image, forKey: url as NSURL)
+      })
+      .eraseToAnyPublisher()
   }
 }
 

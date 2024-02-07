@@ -7,28 +7,43 @@
 
 import Foundation
 import UIKit
-struct CellListVM {
-  var title: String
-  var subtitle: String
-  var imageString: String
-  var imageService: ImageService
-  
-  func getImage(url: URL, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
-    DispatchQueue.global().async {
-      imageService.fetchImage(url: url) {  (result) in
-        switch result {
-          case .success(let imageData):
-              guard let image = UIImage(data: imageData) else {
-                completion(.failure(.decodingError(err: "Error while Downloading")))
-                return
-              }
-              completion(.success(image))
-          case .failure(let error):
-            print("response is \(error)")
-            completion(.failure(.decodingError(err: "Error while Downloading")))
-        }
-      }
-    }
+import Combine
+class CellListVM {
+  internal init(title: String? = nil,
+                subtitle: String? = nil,
+                imageString: String? = nil,
+                imageService: ImageService? = nil,
+                cancellables: Set<AnyCancellable> = Set<AnyCancellable>()) {
+    self.title = title
+    self.subtitle = subtitle
+    self.imageString = imageString
+    self.imageService = imageService
+    self.cancellables = cancellables
   }
   
+  var title: String?
+  var subtitle: String?
+  var imageString: String?
+  var imageService: ImageService?
+  private var cancellables = Set<AnyCancellable>()
+
+  
+  func getImage(url: URL, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
+    let responsePublisher  = imageService!.fetchImageForNewsItem(url: url)
+    responsePublisher
+      .sink { completion in
+        switch completion {
+          case .finished:
+            debugPrint("Finsihed the request")
+            break
+          case .failure(let error):
+            debugPrint("Some error")
+        }
+      }
+  receiveValue: { image in
+    print("response")
+    completion(.success(image))
+  }
+  .store(in: &cancellables)
+  }
 }

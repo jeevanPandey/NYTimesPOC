@@ -7,31 +7,50 @@
 
 import Foundation
 import UIKit
-struct DetailViewModel {
-  var title: String
-  var details: String
+import Combine
+
+class DetailViewModel {
+  var title: String?
+  var details: String?
   var imageURL: String?
-  var publishedDate: String
-  var caption: String
-  var imageService: ImageFetcherInterface
+  var publishedDate: String?
+  var caption: String?
+  var imageService: ImageFetcherInterface?
+  private var cancellables = Set<AnyCancellable>()
+
+  internal init(title: String? = nil,
+                details: String? = nil,
+                imageURL: String? = nil,
+                publishedDate: String? = nil,
+                caption: String? = nil,
+                imageService: ImageFetcherInterface? = nil,
+                cancellables: Set<AnyCancellable> = Set<AnyCancellable>()) {
+    self.title = title
+    self.details = details
+    self.imageURL = imageURL
+    self.publishedDate = publishedDate
+    self.caption = caption
+    self.imageService = imageService
+    self.cancellables = cancellables
+  }
   
   func getImage(url: URL, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
-    DispatchQueue.global().async {
-      imageService.fetchImage(url: url) {  (result) in
-        switch result {
-          case .success(let imageData):
-              guard let image = UIImage(data: imageData) else {
-                completion(.failure(.decodingError(err: "Error while Downloading")))
-                return
-              }
-              completion(.success(image))
+    let responsePublisher  = imageService!.fetchImageForNewsItem(url: url)
+    responsePublisher
+      .sink { completion in
+        switch completion {
+          case .finished:
+            debugPrint("Finsihed the request")
+            break
           case .failure(let error):
-            print("response is \(error)")
-            completion(.failure(.decodingError(err: "Error while Downloading")))
+            debugPrint("Some error \(error)")
+          }
         }
+      receiveValue: { image in
+        print("response")
+        completion(.success(image))
       }
-    }
+  .store(in: &cancellables)
   }
-
 }
 

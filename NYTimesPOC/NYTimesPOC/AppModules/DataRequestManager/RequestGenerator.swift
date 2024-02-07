@@ -6,12 +6,12 @@
 //
 
 
-import Foundation
+import UIKit
 import Combine
 
 // This is service class which calls API for news 
 protocol ImageFetcherInterface {
-  func fetchImage(url:URL, completion: @escaping (Result<Data, NetworkError>) -> ())
+  func fetchImageForNewsItem(url:URL) -> AnyPublisher<UIImage, NetworkError>
 }
 protocol NewsAPIFetcherInterface  {
   func getNewsArticleData() -> AnyPublisher<ArticleResponse, NetworkError>
@@ -42,10 +42,8 @@ class NewsService: NewsAPIFetcherInterface,ServerEndPoint {
 }
 
 class ImageService: ImageFetcherInterface {
-  func fetchImage(url: URL, completion: @escaping (Result<Data, NetworkError>) -> ()) {
-    DataRequestManager<Data>().loadData(url: url) { result in
-      completion(result)
-    }
+  func fetchImageForNewsItem(url: URL) -> AnyPublisher<UIImage, NetworkError> {
+    DataRequestManager<Data>().loadImageData(url: url).eraseToAnyPublisher()
   }
 }
 

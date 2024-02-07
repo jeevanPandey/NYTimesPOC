@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import Combine
 
 class NewsListVC: UIViewController {
-
+  private var cancellables = Set<AnyCancellable>()
   @IBOutlet weak var tableview: UITableView!
   
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!

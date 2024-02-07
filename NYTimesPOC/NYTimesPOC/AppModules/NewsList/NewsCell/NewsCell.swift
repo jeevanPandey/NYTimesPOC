@@ -31,7 +31,9 @@ class NewsCell: UITableViewCell {
   func configureCell(cellViewModel: CellListVM) {
     articleTitle.text = cellViewModel.title
     articleSubtitle.text = cellViewModel.subtitle
-    if let url = URL(string: cellViewModel.imageString), !cellViewModel.imageString.isEmpty {
+    if let imageString = cellViewModel.imageString,
+        let url = URL(string: imageString),
+       !imageString.isEmpty {
       cellViewModel.getImage(url: url) { result in
         DispatchQueue.main.async {
           switch result {
@@ -44,20 +46,4 @@ class NewsCell: UITableViewCell {
       }
     }
   }
-  
-  private func setImage(url: URL, service: ImageService) {
-    DispatchQueue.global().async {
-      service.fetchImage(url: url) { [weak self] (result) in
-        switch result {
-          case .success(let imageData):
-            DispatchQueue.main.async {
-              self?.articleImage.image = UIImage(data: imageData)
-            }
-          case .failure(let error):
-            print("response is \(error)")
-        }
-      }
-    }
-  }
-    
 }
