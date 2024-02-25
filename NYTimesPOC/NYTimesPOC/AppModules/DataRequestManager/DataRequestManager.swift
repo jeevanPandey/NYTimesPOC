@@ -11,7 +11,9 @@ import Foundation
 
 class DataRequestManager <T: Codable> {
     
-  func makeAPICall(url: String, params: [String: String], httpHeader: NetworkConfig.HTTPHeaderFields, requestType:NetworkConfig.HTTPMehod ) async throws -> T {
+  func makeAPICall(url: String, params: [String: String],
+                   httpHeader: NetworkConfig.HTTPHeaderFields,
+                   requestType:NetworkConfig.HTTPMehod) async throws -> T {
     guard let secondaryURL = URL(string: url) else {
         print("Error: cannot create URL")
       throw NetworkError.invalidResponse
@@ -19,16 +21,8 @@ class DataRequestManager <T: Codable> {
     var request = URLRequest(url: secondaryURL)
     request.httpMethod = requestType.rawValue
     httpHeader.setHeader(urlRequest: &request)
-    
-    let config = URLSessionConfiguration.ephemeral
-    let session = URLSession(configuration: config)
-    let (data,response) = try await session.data(for: request)
-      guard let response = response as? HTTPURLResponse, (200 ..< 300) ~= response.statusCode else {
-          print("Error: HTTP request failed")
-        throw NetworkError.invalidResponse
-      }
-      let json = try JSONDecoder().decode(T.self, from: data)
-      return json
+    let responseData =  try await makeServerCall(urlRequest: request)
+    return responseData
   }
 
   func loadData(url: URL) async throws -> Data {
@@ -43,12 +37,28 @@ class DataRequestManager <T: Codable> {
       throw NetworkError.invalidResponse
       
     } */
-    let (data,response) = try await URLSession.shared.data(from: url)
-    guard let response = response as? HTTPURLResponse, (200 ..< 300) ~= response.statusCode else {
-        print("Error: HTTP request failed")
+    let request = URLRequest(url: url)
+    let responseData =  try await makeServerCall(urlRequest: request)
+    if let responseData = responseData as? Data {
+      return responseData
+    } else {
       throw NetworkError.invalidResponse
     }
-    return data
+  }
+  
+  private func makeServerCall(urlRequest: URLRequest) async throws -> T {
+    let config = URLSessionConfiguration.ephemeral
+    let session = URLSession(configuration: config)
+    let (data,response) = try await session.data(for: urlRequest)
+      guard let response = response as? HTTPURLResponse, (200 ..< 300) ~= response.statusCode else {
+          print("Error: HTTP request failed")
+        throw NetworkError.invalidResponse
+      }
+    if let data = data as? T, T.self == Data.self {
+      return data
+    }
+    let json = try JSONDecoder().decode(T.self, from: data)
+    return json
   }
 }
 
