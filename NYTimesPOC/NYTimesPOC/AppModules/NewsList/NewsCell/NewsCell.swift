@@ -34,7 +34,7 @@ class NewsCell: UITableViewCell {
     if let imageString = cellViewModel.imageString,
         let url = URL(string: imageString),
        !imageString.isEmpty {
-      cellViewModel.getImage(url: url) { result in
+      CellListVM.getImage(url: url) { result in
         DispatchQueue.main.async {
           switch result {
             case .success(let imageData):

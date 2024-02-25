@@ -11,25 +11,20 @@ import Combine
 class CellListVM {
   internal init(title: String? = nil,
                 subtitle: String? = nil,
-                imageString: String? = nil,
-                imageService: ImageService? = nil,
-                cancellables: Set<AnyCancellable> = Set<AnyCancellable>()) {
+                imageString: String? = nil) {
     self.title = title
     self.subtitle = subtitle
     self.imageString = imageString
-    self.imageService = imageService
-    self.cancellables = cancellables
   }
   
   var title: String?
   var subtitle: String?
   var imageString: String?
-  var imageService: ImageService?
-  private var cancellables = Set<AnyCancellable>()
+  static var cancellables = Set<AnyCancellable>()
 
-  
-  func getImage(url: URL, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
-    let responsePublisher  = imageService!.fetchImageForNewsItem(url: url)
+  static func getImage(url: URL, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
+    var imageService =  ImageService()
+    let responsePublisher  = imageService.fetchImageForNewsItem(url: url)
     responsePublisher
       .sink { completion in
         switch completion {
