@@ -36,7 +36,9 @@ class NewsDetailVC: UIViewController {
     Task {
       do {
         let imageData = try await detailVM.getImage(url: imageURL)
-        self.articleImage.image = UIImage(data: imageData)
+        await MainActor.run {
+          self.articleImage.image = UIImage(data: imageData)
+        }
       } catch {
         print("response is \(error)")
       }

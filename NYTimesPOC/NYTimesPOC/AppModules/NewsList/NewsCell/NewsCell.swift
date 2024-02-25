@@ -35,7 +35,9 @@ class NewsCell: UITableViewCell {
       Task {
         do {
           let imageData = try await CellListVM.getImage(url: url)
-          self.articleImage.image = UIImage(data: imageData)
+          await MainActor.run {
+            self.articleImage.image = UIImage(data: imageData)
+          }
         } catch {
           print("response is \(error)")
         }
