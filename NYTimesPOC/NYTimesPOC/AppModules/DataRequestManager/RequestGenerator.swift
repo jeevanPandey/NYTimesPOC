@@ -10,13 +10,15 @@ import Foundation
 
 // This is service class which calls API for news 
 protocol ImageFetcherInterface {
-  func fetchImage(url:URL, completion: @escaping (Result<Data, NetworkError>) -> ())
+  func fetchImage(url: URL) async throws -> Data
 }
 protocol NewsAPIFetcherInterface  {
-  func fetchNewArticleData(completion: @escaping (Result<ArticleResponse, NetworkError>) -> ())
+  func fetchNewArticleData() async throws -> ArticleResponse
+
 }
 
 class NewsService: NewsAPIFetcherInterface,ServerEndPoint {
+  
   var headers: NetworkConfig.HTTPHeaderFields
   var baseURLString: String
   var requestMethod: NetworkConfig.HTTPMehod
@@ -32,19 +34,17 @@ class NewsService: NewsAPIFetcherInterface,ServerEndPoint {
     self.init(endpointConfig: defaltConfig)
   }
   
-  func fetchNewArticleData(completion: @escaping(Result<ArticleResponse, NetworkError>) -> ()) {
-    DataRequestManager<ArticleResponse>().makeAPICall(url: self.baseURLString, params: ["": ""],
-                                                      httpHeader: self.headers , requestType: self.requestMethod) { result in
-      completion(result)
-    }
+  func fetchNewArticleData() async throws -> ArticleResponse {
+    return try await DataRequestManager<ArticleResponse>().makeAPICall(url: self.baseURLString,
+                                                                               params: ["": ""],
+                                                                               httpHeader: self.headers,
+                                                                               requestType: self.requestMethod)
   }
 }
 
 class ImageService: ImageFetcherInterface {
-  func fetchImage(url: URL, completion: @escaping (Result<Data, NetworkError>) -> ()) {
-    DataRequestManager<Data>().loadData(url: url) { result in
-      completion(result)
-    }
+  func fetchImage(url: URL) async throws -> Data {
+   return try await DataRequestManager<Data>().loadData(url: url)
   }
 }
 

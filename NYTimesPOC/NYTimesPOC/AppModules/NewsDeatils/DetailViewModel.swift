@@ -15,22 +15,10 @@ struct DetailViewModel {
   var caption: String
   var imageService: ImageFetcherInterface
   
-  func getImage(url: URL, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
-    DispatchQueue.global().async {
-      imageService.fetchImage(url: url) {  (result) in
-        switch result {
-          case .success(let imageData):
-              guard let image = UIImage(data: imageData) else {
-                completion(.failure(.decodingError(err: "Error while Downloading")))
-                return
-              }
-              completion(.success(image))
-          case .failure(let error):
-            print("response is \(error)")
-            completion(.failure(.decodingError(err: "Error while Downloading")))
-        }
-      }
-    }
+  func getImage(url: URL) async throws -> Data {
+    let imageService =  ImageService()
+    let imageData = try await imageService.fetchImage(url: url)
+     return imageData
   }
 
 }

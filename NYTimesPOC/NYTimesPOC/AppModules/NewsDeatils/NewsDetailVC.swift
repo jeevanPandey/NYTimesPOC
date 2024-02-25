@@ -31,15 +31,14 @@ class NewsDetailVC: UIViewController {
     articleTitle.text = detailVM.title
     articleDetails.text = detailVM.details
     articlePublisheDate.text = detailVM.publishedDate
-    guard let imageURLStr = detailVM.imageURL, let imageURL = URL(string: imageURLStr) else { return }
-    detailVM.getImage(url: imageURL) { result in
-      DispatchQueue.main.async {
-        switch result {
-          case .success(let imageData):
-            self.articleImage.image = imageData
-          case .failure(let error):
-            print("response is \(error)")
-        }
+    guard let imageURLStr = detailVM.imageURL,
+          let imageURL = URL(string: imageURLStr) else { return }
+    Task {
+      do {
+        let imageData = try await detailVM.getImage(url: imageURL)
+        self.articleImage.image = UIImage(data: imageData)
+      } catch {
+        print("response is \(error)")
       }
     }
   }

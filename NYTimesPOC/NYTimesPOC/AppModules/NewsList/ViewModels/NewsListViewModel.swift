@@ -26,16 +26,19 @@ class NewsListViewModel {
                   requestMethod: .GET, headers: .appJson)
   }
   func getLatestNews() {
-    newsListService.fetchNewArticleData { [weak self] (result) in
-      switch result {
-        case .success(let response):
-          if let articles = response.articles {
-            self?.newList.removeAll()
-            self?.newList.append(contentsOf: articles)
-            self?.createCellViewModel()
+    Task {
+      do  {
+        let response = try await newsListService.fetchNewArticleData()
+        if let articles = response.articles {
+          self.newList.removeAll()
+          self.newList.append(contentsOf: articles)
+          await MainActor.run {
+            self.createCellViewModel()
           }
-        case .failure(let error):
-          print("response is \(error)")
+        }
+      } catch {
+        print("response is \(error)")
+
       }
     }
   }
@@ -44,8 +47,7 @@ class NewsListViewModel {
     let modifiedArray = filterArray(articles: self.newList)
     let cellVM =  modifiedArray.map { eachArtitle -> CellListVM in
       return CellListVM(title: eachArtitle.title ?? "", subtitle: eachArtitle.abstract ?? "",
-                        imageString: getMediaURLPath(article: eachArtitle),
-                        imageService: ImageService())
+                        imageString: getMediaURLPath(article: eachArtitle))
     }
     cellListVM = cellVM
   }

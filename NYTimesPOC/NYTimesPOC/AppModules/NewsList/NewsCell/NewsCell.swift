@@ -32,32 +32,14 @@ class NewsCell: UITableViewCell {
     articleTitle.text = cellViewModel.title
     articleSubtitle.text = cellViewModel.subtitle
     if let url = URL(string: cellViewModel.imageString), !cellViewModel.imageString.isEmpty {
-      cellViewModel.getImage(url: url) { result in
-        DispatchQueue.main.async {
-          switch result {
-            case .success(let imageData):
-              self.articleImage.image = imageData
-            case .failure(let error):
-              print("response is \(error)")
-          }
+      Task {
+        do {
+          let imageData = try await CellListVM.getImage(url: url)
+          self.articleImage.image = UIImage(data: imageData)
+        } catch {
+          print("response is \(error)")
         }
       }
     }
   }
-  
-  private func setImage(url: URL, service: ImageService) {
-    DispatchQueue.global().async {
-      service.fetchImage(url: url) { [weak self] (result) in
-        switch result {
-          case .success(let imageData):
-            DispatchQueue.main.async {
-              self?.articleImage.image = UIImage(data: imageData)
-            }
-          case .failure(let error):
-            print("response is \(error)")
-        }
-      }
-    }
-  }
-    
 }
