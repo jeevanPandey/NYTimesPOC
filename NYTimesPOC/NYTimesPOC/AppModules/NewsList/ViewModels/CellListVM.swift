@@ -32,7 +32,8 @@ class CellListVM {
             debugPrint("Finsihed the request")
             break
           case .failure(let error):
-            debugPrint("Some error")
+            print("response is: \(error)")
+            completion(.failure(.decodingError(err: "Error while Downloading")))
         }
       }
   receiveValue: { image in
