@@ -18,13 +18,13 @@ struct CellListVM {
       imageService.fetchImage(url: url) {  (result) in
         switch result {
           case .success(let imageData):
-              guard let image = UIImage(data: imageData) else {
-                completion(.failure(.decodingError(err: "Error while Downloading")))
-                return
-              }
-              completion(.success(image))
+            guard let image = UIImage(data: imageData) else {
+              completion(.failure(.decodingError(err: "Error while Downloading")))
+              return
+            }
+            completion(.success(image))
           case .failure(let error):
-            print("response is \(error)")
+            print("response is: \(error)")
             completion(.failure(.decodingError(err: "Error while Downloading")))
         }
       }
